@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Play, Sparkles, BarChart3, MessageCircle, Map, Calendar, TrendingUp, Lock, Check } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ArrowRight, Play, Sparkles, BarChart3, MessageCircle, Map, Calendar, TrendingUp, Lock, Check, Star, Facebook, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import dashboardMockup from "@/assets/dashboard-mockup.png";
 
@@ -524,6 +525,201 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-muted/30" id="depoimentos">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl font-bold mb-4">
+              O que dizem nossos{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Vereadores
+              </span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Veja como o GestorLegis está transformando mandatos em todo o Brasil
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Depoimento 1 */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                ))}
+              </div>
+              <p className="text-foreground mb-6 italic">
+                "Economizei 20h por semana e meu engajamento triplicou! A plataforma mudou completamente minha forma de trabalhar."
+              </p>
+              <div className="flex items-center gap-4">
+                <Avatar className="h-12 w-12">
+                  <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+                    JS
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="font-semibold text-foreground">João Silva</div>
+                  <div className="text-sm text-muted-foreground">Vereador • São Paulo, SP</div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Depoimento 2 */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                ))}
+              </div>
+              <p className="text-foreground mb-6 italic">
+                "O melhor investimento do meu mandato. Indispensável! Não consigo mais imaginar minha rotina sem o GestorLegis."
+              </p>
+              <div className="flex items-center gap-4">
+                <Avatar className="h-12 w-12">
+                  <AvatarFallback className="bg-accent text-accent-foreground font-semibold">
+                    MS
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="font-semibold text-foreground">Maria Santos</div>
+                  <div className="text-sm text-muted-foreground">Vereadora • Rio de Janeiro, RJ</div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Depoimento 3 */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                ))}
+              </div>
+              <p className="text-foreground mb-6 italic">
+                "A IA realmente funciona. Impressionante! Os relatórios automáticos economizam horas de trabalho manual."
+              </p>
+              <div className="flex items-center gap-4">
+                <Avatar className="h-12 w-12">
+                  <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+                    CO
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="font-semibold text-foreground">Carlos Oliveira</div>
+                  <div className="text-sm text-muted-foreground">Vereador • Belo Horizonte, MG</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-24 gradient-hero relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        </div>
+
+        <div className="container mx-auto px-6 text-center relative z-10">
+          <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">
+            <h2 className="text-5xl font-bold text-white leading-tight">
+              Pronto para transformar seu mandato?
+            </h2>
+            <p className="text-xl text-white/90 leading-relaxed">
+              Junte-se a centenas de vereadores que já economizam tempo e aumentam impacto
+            </p>
+            <div className="flex flex-col items-center gap-4">
+              <Button 
+                size="lg" 
+                className="text-lg px-12 py-8 h-auto shadow-elegant hover:scale-105 transition-smooth bg-white text-primary hover:bg-white/90"
+                asChild
+              >
+                <Link to="/auth">
+                  Começar Teste Grátis de 14 Dias
+                  <ArrowRight className="ml-2 h-6 w-6" />
+                </Link>
+              </Button>
+              <p className="text-sm text-white/70">
+                Sem cartão de crédito • Cancele quando quiser
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-sidebar-background text-sidebar-foreground py-12 border-t border-sidebar-border">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            {/* Logo and Description */}
+            <div className="md:col-span-2">
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-xl">G</span>
+                </div>
+                <span className="text-2xl font-bold">GestorLegis</span>
+              </div>
+              <p className="text-sidebar-foreground/70 mb-4 max-w-md">
+                A plataforma completa de gestão legislativa com inteligência artificial para vereadores modernos.
+              </p>
+              <div className="flex gap-4">
+                <a href="#" className="text-sidebar-foreground/70 hover:text-primary transition-smooth">
+                  <Facebook className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-sidebar-foreground/70 hover:text-primary transition-smooth">
+                  <Twitter className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-sidebar-foreground/70 hover:text-primary transition-smooth">
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-sidebar-foreground/70 hover:text-primary transition-smooth">
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
+
+            {/* Links */}
+            <div>
+              <h3 className="font-semibold mb-4">Produto</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#funcionalidades" className="text-sidebar-foreground/70 hover:text-primary transition-smooth">
+                    Funcionalidades
+                  </a>
+                </li>
+                <li>
+                  <a href="#precos" className="text-sidebar-foreground/70 hover:text-primary transition-smooth">
+                    Preços
+                  </a>
+                </li>
+                <li>
+                  <a href="#depoimentos" className="text-sidebar-foreground/70 hover:text-primary transition-smooth">
+                    Depoimentos
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="font-semibold mb-4">Contato</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="mailto:contato@gestorlegis.com.br" className="text-sidebar-foreground/70 hover:text-primary transition-smooth flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    contato@gestorlegis.com.br
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-sidebar-border pt-8 text-center text-sidebar-foreground/70 text-sm">
+            <p>© 2024 GestorLegis. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
