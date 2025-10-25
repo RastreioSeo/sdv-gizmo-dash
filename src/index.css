@@ -63,6 +63,7 @@ All colors MUST be HSL.
     /* Shadows */
     --shadow-elegant: 0 10px 30px -10px hsl(221 83% 53% / 0.15);
     --shadow-card: 0 4px 6px -1px hsl(222 47% 11% / 0.05);
+    --shadow-glow: 0 0 30px hsl(221 83% 53% / 0.4), 0 0 60px hsl(217 91% 60% / 0.2);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -153,5 +154,20 @@ All colors MUST be HSL.
   
   .hover-scale:hover {
     @apply -translate-y-2 shadow-2xl;
+  }
+  
+  .glow-border {
+    position: relative;
+    box-shadow: 0 0 30px hsl(221 83% 53% / 0.4), 0 0 60px hsl(217 91% 60% / 0.2);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 30px hsl(221 83% 53% / 0.4), 0 0 60px hsl(217 91% 60% / 0.2);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(221 83% 53% / 0.6), 0 0 80px hsl(217 91% 60% / 0.3);
+    }
   }
 }

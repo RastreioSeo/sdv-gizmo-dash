@@ -423,8 +423,8 @@ const Landing = () => {
             </Card>
 
             {/* Plano Profissional - DESTAQUE */}
-            <Card className="p-8 relative shadow-elegant transition-smooth border-2 border-primary hover-scale">
-              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 py-1">
+            <Card className="p-8 relative glow-border transition-smooth border-2 border-primary hover-scale scale-105">
+              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 py-1 shadow-elegant animate-pulse">
                 Mais Escolhido
               </Badge>
 
