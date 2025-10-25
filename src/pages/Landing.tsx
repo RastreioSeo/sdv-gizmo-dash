@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Sparkles } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { ArrowRight, Play, Sparkles, BarChart3, MessageCircle, Map, Calendar, TrendingUp, Lock, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import dashboardMockup from "@/assets/dashboard-mockup.png";
 
@@ -130,6 +131,238 @@ const Landing = () => {
                 <div className="text-2xl font-bold text-accent">15h/sem</div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section className="py-20 bg-background" id="beneficios">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl font-bold mb-4">
+              Resultados que{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Transformam
+              </span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Veja o impacto real que nossa plataforma gera no dia a dia dos vereadores
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="p-8 text-center hover-scale shadow-card transition-smooth border-border/50">
+              <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                500+
+              </div>
+              <div className="text-lg font-semibold text-foreground mb-1">Vereadores Ativos</div>
+              <div className="text-sm text-muted-foreground">Em todo Brasil</div>
+            </Card>
+
+            <Card className="p-8 text-center hover-scale shadow-card transition-smooth border-border/50">
+              <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                15h
+              </div>
+              <div className="text-lg font-semibold text-foreground mb-1">Economizadas/Semana</div>
+              <div className="text-sm text-muted-foreground">Automação inteligente</div>
+            </Card>
+
+            <Card className="p-8 text-center hover-scale shadow-card transition-smooth border-border/50">
+              <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                300%
+              </div>
+              <div className="text-lg font-semibold text-foreground mb-1">↑ Engajamento</div>
+              <div className="text-sm text-muted-foreground">Com a população</div>
+            </Card>
+
+            <Card className="p-8 text-center hover-scale shadow-card transition-smooth border-border/50">
+              <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                98%
+              </div>
+              <div className="text-lg font-semibold text-foreground mb-1">Satisfação</div>
+              <div className="text-sm text-muted-foreground">Usuários satisfeitos</div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-muted/30" id="funcionalidades">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl font-bold mb-4">
+              Funcionalidades{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Poderosas
+              </span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Tudo o que você precisa para uma gestão legislativa de excelência
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Dashboard Inteligente */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+              <div className="mb-6">
+                <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <BarChart3 className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Dashboard Inteligente</h3>
+                <p className="text-muted-foreground mb-4">
+                  Visualize todas as suas métricas em tempo real com análises preditivas
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>KPIs personalizados e dashboards customizáveis</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Relatórios automáticos gerados por IA</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Alertas inteligentes de prioridades</span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* CRM de Cidadãos */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+              <div className="mb-6">
+                <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <MessageCircle className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">CRM de Cidadãos</h3>
+                <p className="text-muted-foreground mb-4">
+                  Gerencie relacionamentos e demandas dos cidadãos em um só lugar
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Histórico completo de interações</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Categorização automática de demandas</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Follow-up automatizado via WhatsApp</span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* Mapa de Demandas */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+              <div className="mb-6">
+                <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <Map className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Mapa de Demandas</h3>
+                <p className="text-muted-foreground mb-4">
+                  Visualize geograficamente as demandas do seu distrito
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Mapa de calor de demandas por região</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Filtros por categoria e urgência</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Rotas otimizadas para visitas</span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* Agenda Sincronizada */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+              <div className="mb-6">
+                <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <Calendar className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Agenda Sincronizada</h3>
+                <p className="text-muted-foreground mb-4">
+                  Sincronize automaticamente com Google Calendar e Outlook
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Sincronização bidirecional em tempo real</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Lembretes automáticos de sessões</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Gestão de conflitos de horário</span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* Analytics Avançado */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+              <div className="mb-6">
+                <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <TrendingUp className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Analytics Avançado</h3>
+                <p className="text-muted-foreground mb-4">
+                  Análises profundas com inteligência artificial
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Previsão de tendências legislativas</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Análise de sentimento populacional</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Benchmarking com outras câmaras</span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* Segurança Total */}
+            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+              <div className="mb-6">
+                <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <Lock className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Segurança Total</h3>
+                <p className="text-muted-foreground mb-4">
+                  Proteção de dados com criptografia de ponta a ponta
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Conformidade com LGPD e ISO 27001</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Backups automáticos diários</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>Autenticação multi-fator (MFA)</span>
+                </li>
+              </ul>
+            </Card>
           </div>
         </div>
       </section>
