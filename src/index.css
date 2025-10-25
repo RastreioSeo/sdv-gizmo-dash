@@ -146,4 +146,12 @@ All colors MUST be HSL.
   .transition-smooth {
     transition: var(--transition-smooth);
   }
+  
+  .hover-scale {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .hover-scale:hover {
+    @apply -translate-y-2 shadow-2xl;
+  }
 }
