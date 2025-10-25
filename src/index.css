@@ -57,6 +57,8 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(217 91% 60%));
     --gradient-subtle: linear-gradient(180deg, hsl(210 40% 98%), hsl(0 0% 100%));
+    --gradient-hero: linear-gradient(135deg, hsl(222 47% 11%), hsl(265 50% 25%));
+    --gradient-card: linear-gradient(145deg, hsl(221 83% 53% / 0.05), hsl(217 91% 60% / 0.05));
     
     /* Shadows */
     --shadow-elegant: 0 10px 30px -10px hsl(221 83% 53% / 0.15);
@@ -123,6 +125,14 @@ All colors MUST be HSL.
 @layer utilities {
   .gradient-primary {
     background: var(--gradient-primary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-card {
+    background: var(--gradient-card);
   }
   
   .shadow-elegant {

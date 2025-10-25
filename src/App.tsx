@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import Landing from "./pages/Landing";
 import Index from "./pages/Index";
 import Projetos from "./pages/Projetos";
 import NovoProjeto from "./pages/NovoProjeto";
@@ -24,6 +25,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/auth" element={<Auth />} />
           <Route
             path="/*"
@@ -34,7 +36,7 @@ const App = () => (
                     <AppSidebar />
                     <div className="flex-1">
                       <Routes>
-                        <Route path="/" element={<Index />} />
+                        <Route path="/dashboard" element={<Index />} />
                         <Route path="/projetos" element={<Projetos />} />
                         <Route path="/projetos/novo" element={<NovoProjeto />} />
                         <Route path="/comunicacao" element={<Comunicacao />} />
