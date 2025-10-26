@@ -35,8 +35,8 @@ export function AppSidebar() {
           </div>
           {!isCollapsed && (
             <div>
-              <h2 className="text-sm font-semibold text-sidebar-foreground">Sistema Legislativo</h2>
-              <p className="text-xs text-sidebar-foreground/70">Gestão de Vereadores</p>
+              <h2 className="text-sm font-semibold text-sidebar-foreground">Plenário</h2>
+              <p className="text-xs text-sidebar-foreground/70">Sistema Legislativo</p>
             </div>
           )}
         </div>
