@@ -1,4 +1,4 @@
-import { LayoutDashboard, FileText, Calendar, Bell, Users, Settings, BarChart3 } from "lucide-react";
+import { LayoutDashboard, FileText, Calendar, Bell, Users, Settings, BarChart3, Vote } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -18,6 +18,7 @@ const menuItems = [
   { title: "Projetos de Lei", url: "/projetos", icon: FileText },
   { title: "Comunicação", url: "/comunicacao", icon: Bell },
   { title: "Agenda", url: "/agenda", icon: Calendar },
+  { title: "Votação", url: "/votacao", icon: Vote },
   { title: "Relatórios", url: "/relatorios", icon: BarChart3 },
   { title: "Configurações", url: "/configuracoes", icon: Settings },
 ];

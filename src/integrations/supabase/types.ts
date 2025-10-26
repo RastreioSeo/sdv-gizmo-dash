@@ -86,6 +86,47 @@ export type Database = {
         }
         Relationships: []
       }
+      sessoes_votacao: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          encerrada_em: string | null
+          id: string
+          projeto_id: string | null
+          status: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          encerrada_em?: string | null
+          id?: string
+          projeto_id?: string | null
+          status?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          encerrada_em?: string | null
+          id?: string
+          projeto_id?: string | null
+          status?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sessoes_votacao_projeto_id_fkey"
+            columns: ["projeto_id"]
+            isOneToOne: false
+            referencedRelation: "projetos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -103,6 +144,41 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      votos: {
+        Row: {
+          created_at: string
+          id: string
+          sessao_id: string
+          updated_at: string
+          user_id: string
+          voto: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          sessao_id: string
+          updated_at?: string
+          user_id: string
+          voto: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          sessao_id?: string
+          updated_at?: string
+          user_id?: string
+          voto?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votos_sessao_id_fkey"
+            columns: ["sessao_id"]
+            isOneToOne: false
+            referencedRelation: "sessoes_votacao"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

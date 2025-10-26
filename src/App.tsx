@@ -13,6 +13,7 @@ import NovoProjeto from "./pages/NovoProjeto";
 import Comunicacao from "./pages/Comunicacao";
 import Agenda from "./pages/Agenda";
 import Relatorios from "./pages/Relatorios";
+import Votacao from "./pages/Votacao";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -41,6 +42,7 @@ const App = () => (
                         <Route path="/projetos/novo" element={<NovoProjeto />} />
                         <Route path="/comunicacao" element={<Comunicacao />} />
                         <Route path="/agenda" element={<Agenda />} />
+                        <Route path="/votacao" element={<Votacao />} />
                         <Route path="/relatorios" element={<Relatorios />} />
                         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                         <Route path="*" element={<NotFound />} />
