@@ -2,16 +2,46 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowRight, Play, Sparkles, BarChart3, MessageCircle, Map, Calendar, TrendingUp, Lock, Check, Star, Facebook, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ArrowRight, Play, Sparkles, BarChart3, MessageCircle, Map, Calendar, TrendingUp, Lock, Check, Star, Facebook, Twitter, Instagram, Linkedin, Mail, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import dashboardMockup from "@/assets/dashboard-mockup.png";
 
 const Landing = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+            entry.target.classList.remove('opacity-0');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    // Observe all elements with data-animate class
+    document.querySelectorAll('[data-animate]').forEach((el) => {
+      el.classList.add('opacity-0');
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
+        <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">G</span>
@@ -19,6 +49,7 @@ const Landing = () => {
             <span className="text-xl font-bold text-foreground">GestorLegis</span>
           </div>
           
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <a href="#funcionalidades" className="text-sm text-muted-foreground hover:text-foreground transition-smooth">
               Funcionalidades
@@ -29,17 +60,67 @@ const Landing = () => {
             <a href="#precos" className="text-sm text-muted-foreground hover:text-foreground transition-smooth">
               Preços
             </a>
-            <a href="#contato" className="text-sm text-muted-foreground hover:text-foreground transition-smooth">
-              Contato
+            <a href="#depoimentos" className="text-sm text-muted-foreground hover:text-foreground transition-smooth">
+              Depoimentos
             </a>
           </div>
           
-          <Link to="/auth">
-            <Button className="shadow-elegant">
-              Começar Grátis
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          {/* Desktop CTA Button */}
+          <div className="hidden md:block">
+            <Link to="/auth">
+              <Button className="shadow-elegant hover:shadow-glow hover:scale-105 transition-all duration-300">
+                Começar Grátis
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+
+          {/* Mobile Menu */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <nav className="flex flex-col gap-6 mt-8">
+                <a 
+                  href="#funcionalidades" 
+                  className="text-lg font-medium hover:text-primary transition-smooth"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Funcionalidades
+                </a>
+                <a 
+                  href="#beneficios" 
+                  className="text-lg font-medium hover:text-primary transition-smooth"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Benefícios
+                </a>
+                <a 
+                  href="#precos" 
+                  className="text-lg font-medium hover:text-primary transition-smooth"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Preços
+                </a>
+                <a 
+                  href="#depoimentos" 
+                  className="text-lg font-medium hover:text-primary transition-smooth"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Depoimentos
+                </a>
+                <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full shadow-elegant mt-4" size="lg">
+                    Começar Grátis
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
 
@@ -47,34 +128,34 @@ const Landing = () => {
       <section className="relative min-h-screen flex items-center gradient-hero overflow-hidden pt-16">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+          <div className="absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left side - Content */}
-            <div className="text-white space-y-8 animate-fade-in">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-                <Sparkles className="h-4 w-4 text-accent" />
-                <span className="text-sm font-medium">Tecnologia de IA Avançada</span>
+            <div className="text-white space-y-6 sm:space-y-8 animate-fade-in" data-animate>
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-smooth">
+                <Sparkles className="h-4 w-4 text-accent animate-pulse" />
+                <span className="text-xs sm:text-sm font-medium">Tecnologia de IA Avançada</span>
               </div>
               
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
                 Gerencie seu mandato com{" "}
                 <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
                   Inteligência Artificial
                 </span>
               </h1>
               
-              <p className="text-xl text-white/80 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg lg:text-xl text-white/80 leading-relaxed max-w-xl">
                 A plataforma completa para vereadores que economiza até 15 horas por semana automatizando tarefas administrativas e otimizando sua gestão legislativa.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="text-lg px-8 py-6 shadow-elegant hover:scale-105 transition-smooth bg-white text-primary hover:bg-white/90"
+                  className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 shadow-elegant hover:scale-105 hover:shadow-glow transition-all duration-300 bg-white text-primary hover:bg-white/90 animate-pulse"
                   asChild
                 >
                   <Link to="/auth">
@@ -86,51 +167,51 @@ const Landing = () => {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="text-lg px-8 py-6 border-white/20 bg-white/10 text-white hover:bg-white/20 hover:text-white backdrop-blur-sm transition-smooth"
+                  className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-white/20 bg-white/10 text-white hover:bg-white/20 hover:text-white hover:scale-105 backdrop-blur-sm transition-all duration-300"
                 >
                   <Play className="mr-2 h-5 w-5" />
                   Ver Demo
                 </Button>
               </div>
               
-              <div className="flex items-center gap-8 pt-4">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-4">
                 <div>
-                  <div className="text-3xl font-bold">15h</div>
-                  <div className="text-sm text-white/60">economizadas/semana</div>
+                  <div className="text-2xl sm:text-3xl font-bold">15h</div>
+                  <div className="text-xs sm:text-sm text-white/60">economizadas/semana</div>
                 </div>
-                <div className="h-12 w-px bg-white/20" />
+                <div className="h-8 sm:h-12 w-px bg-white/20" />
                 <div>
-                  <div className="text-3xl font-bold">98%</div>
-                  <div className="text-sm text-white/60">satisfação</div>
+                  <div className="text-2xl sm:text-3xl font-bold">98%</div>
+                  <div className="text-xs sm:text-sm text-white/60">satisfação</div>
                 </div>
-                <div className="h-12 w-px bg-white/20" />
+                <div className="h-8 sm:h-12 w-px bg-white/20" />
                 <div>
-                  <div className="text-3xl font-bold">500+</div>
-                  <div className="text-sm text-white/60">vereadores ativos</div>
+                  <div className="text-2xl sm:text-3xl font-bold">500+</div>
+                  <div className="text-xs sm:text-sm text-white/60">vereadores ativos</div>
                 </div>
               </div>
             </div>
             
             {/* Right side - Dashboard mockup */}
-            <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <div className="relative animate-fade-in mt-8 lg:mt-0" style={{ animationDelay: "0.2s" }} data-animate>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-20 blur-3xl rounded-3xl" />
                 <img 
                   src={dashboardMockup} 
                   alt="Dashboard do GestorLegis" 
-                  className="relative rounded-2xl shadow-2xl border border-white/10 hover:scale-105 transition-smooth duration-500"
+                  className="relative rounded-xl sm:rounded-2xl shadow-2xl border border-white/10 hover:scale-105 transition-all duration-500"
                 />
               </div>
               
-              {/* Floating cards */}
-              <div className="absolute -bottom-8 -left-8 bg-white rounded-xl p-4 shadow-elegant animate-fade-in" style={{ animationDelay: "0.4s" }}>
-                <div className="text-sm text-muted-foreground">Projetos concluídos</div>
-                <div className="text-2xl font-bold text-primary">+47%</div>
+              {/* Floating cards - hidden on mobile */}
+              <div className="hidden sm:block absolute -bottom-6 sm:-bottom-8 -left-4 sm:-left-8 bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-elegant animate-fade-in hover:scale-110 transition-all duration-300" style={{ animationDelay: "0.4s" }}>
+                <div className="text-xs sm:text-sm text-muted-foreground">Projetos concluídos</div>
+                <div className="text-xl sm:text-2xl font-bold text-primary">+47%</div>
               </div>
               
-              <div className="absolute -top-8 -right-8 bg-white rounded-xl p-4 shadow-elegant animate-fade-in" style={{ animationDelay: "0.6s" }}>
-                <div className="text-sm text-muted-foreground">Tempo economizado</div>
-                <div className="text-2xl font-bold text-accent">15h/sem</div>
+              <div className="hidden sm:block absolute -top-6 sm:-top-8 -right-4 sm:-right-8 bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-elegant animate-fade-in hover:scale-110 transition-all duration-300" style={{ animationDelay: "0.6s" }}>
+                <div className="text-xs sm:text-sm text-muted-foreground">Tempo economizado</div>
+                <div className="text-xl sm:text-2xl font-bold text-accent">15h/sem</div>
               </div>
             </div>
           </div>
@@ -138,22 +219,22 @@ const Landing = () => {
       </section>
 
       {/* Statistics Section */}
-      <section className="py-20 bg-background" id="beneficios">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4">
+      <section className="py-12 sm:py-16 lg:py-20 bg-background" id="beneficios">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16" data-animate>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Resultados que{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Transformam
               </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Veja o impacto real que nossa plataforma gera no dia a dia dos vereadores
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="p-8 text-center hover-scale shadow-card transition-smooth border-border/50">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <Card className="p-6 sm:p-8 text-center hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50" data-animate>
               <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 500+
               </div>
@@ -189,23 +270,23 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/30" id="funcionalidades">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4">
+      <section className="py-12 sm:py-16 lg:py-20 bg-muted/30" id="funcionalidades">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16" data-animate>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Funcionalidades{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Poderosas
               </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Tudo o que você precisa para uma gestão legislativa de excelência
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Dashboard Inteligente */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50 gradient-card" data-animate>
               <div className="mb-6">
                 <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <BarChart3 className="h-7 w-7 text-primary" />
@@ -232,7 +313,7 @@ const Landing = () => {
             </Card>
 
             {/* CRM de Cidadãos */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50 gradient-card" data-animate>
               <div className="mb-6">
                 <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <MessageCircle className="h-7 w-7 text-primary" />
@@ -259,7 +340,7 @@ const Landing = () => {
             </Card>
 
             {/* Mapa de Demandas */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50 gradient-card" data-animate>
               <div className="mb-6">
                 <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <Map className="h-7 w-7 text-primary" />
@@ -286,7 +367,7 @@ const Landing = () => {
             </Card>
 
             {/* Agenda Sincronizada */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50 gradient-card" data-animate>
               <div className="mb-6">
                 <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <Calendar className="h-7 w-7 text-primary" />
@@ -313,7 +394,7 @@ const Landing = () => {
             </Card>
 
             {/* Analytics Avançado */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50 gradient-card" data-animate>
               <div className="mb-6">
                 <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <TrendingUp className="h-7 w-7 text-primary" />
@@ -340,7 +421,7 @@ const Landing = () => {
             </Card>
 
             {/* Segurança Total */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50 gradient-card">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50 gradient-card" data-animate>
               <div className="mb-6">
                 <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <Lock className="h-7 w-7 text-primary" />
@@ -370,23 +451,23 @@ const Landing = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 bg-background" id="precos">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4">
+      <section className="py-12 sm:py-16 lg:py-20 bg-background" id="precos">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16" data-animate>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Planos que{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Cabem no seu Bolso
               </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Escolha o plano ideal para suas necessidades
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {/* Plano Básico */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50" data-animate>
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mb-2">Básico</h3>
                 <div className="flex items-baseline gap-1 mb-4">
@@ -424,8 +505,8 @@ const Landing = () => {
             </Card>
 
             {/* Plano Profissional - DESTAQUE */}
-            <Card className="p-8 relative glow-border transition-smooth border-2 border-primary hover-scale scale-105">
-              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 py-1 shadow-elegant animate-pulse">
+            <Card className="p-6 sm:p-8 relative glow-border transition-all duration-300 border-2 border-primary hover:scale-110 scale-105 shadow-glow" data-animate>
+              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-3 sm:px-4 py-1 shadow-elegant animate-pulse text-xs sm:text-sm">
                 Mais Escolhido
               </Badge>
 
@@ -476,7 +557,7 @@ const Landing = () => {
             </Card>
 
             {/* Plano Institucional */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth border-border/50">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300 border-border/50" data-animate>
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mb-2">Institucional</h3>
                 <div className="flex items-baseline gap-1 mb-4">
@@ -527,23 +608,23 @@ const Landing = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-muted/30" id="depoimentos">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4">
+      <section className="py-12 sm:py-16 lg:py-20 bg-muted/30" id="depoimentos">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16" data-animate>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               O que dizem nossos{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Vereadores
               </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Veja como o GestorLegis está transformando mandatos em todo o Brasil
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {/* Depoimento 1 */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300" data-animate>
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-primary text-primary" />
@@ -566,7 +647,7 @@ const Landing = () => {
             </Card>
 
             {/* Depoimento 2 */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300" data-animate>
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-primary text-primary" />
@@ -589,7 +670,7 @@ const Landing = () => {
             </Card>
 
             {/* Depoimento 3 */}
-            <Card className="p-8 hover-scale shadow-card transition-smooth">
+            <Card className="p-6 sm:p-8 hover:scale-105 hover:shadow-glow shadow-card transition-all duration-300" data-animate>
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-primary text-primary" />
@@ -615,32 +696,32 @@ const Landing = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-24 gradient-hero relative overflow-hidden">
+      <section className="py-16 sm:py-20 lg:py-24 gradient-hero relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+          <div className="absolute top-1/3 left-1/3 w-64 sm:w-96 h-64 sm:h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/3 right-1/3 w-64 sm:w-96 h-64 sm:h-96 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
         </div>
 
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">
-            <h2 className="text-5xl font-bold text-white leading-tight">
+        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+          <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8" data-animate>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
               Pronto para transformar seu mandato?
             </h2>
-            <p className="text-xl text-white/90 leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-white/90 leading-relaxed px-4">
               Junte-se a centenas de vereadores que já economizam tempo e aumentam impacto
             </p>
             <div className="flex flex-col items-center gap-4">
               <Button 
                 size="lg" 
-                className="text-lg px-12 py-8 h-auto shadow-elegant hover:scale-105 transition-smooth bg-white text-primary hover:bg-white/90"
+                className="text-base sm:text-lg px-8 sm:px-12 py-6 sm:py-8 h-auto shadow-elegant hover:scale-105 hover:shadow-glow transition-all duration-300 bg-white text-primary hover:bg-white/90 animate-pulse"
                 asChild
               >
                 <Link to="/auth">
                   Começar Teste Grátis de 14 Dias
-                  <ArrowRight className="ml-2 h-6 w-6" />
+                  <ArrowRight className="ml-2 h-5 w-5 sm:h-6 sm:w-6" />
                 </Link>
               </Button>
-              <p className="text-sm text-white/70">
+              <p className="text-xs sm:text-sm text-white/70">
                 Sem cartão de crédito • Cancele quando quiser
               </p>
             </div>
@@ -649,9 +730,9 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-sidebar-background text-sidebar-foreground py-12 border-t border-sidebar-border">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+      <footer className="bg-sidebar-background text-sidebar-foreground py-8 sm:py-12 border-t border-sidebar-border">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
             {/* Logo and Description */}
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
