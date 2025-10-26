@@ -7,7 +7,7 @@ import { ArrowRight, Play, Sparkles, BarChart3, MessageCircle, Map, Calendar, Tr
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import dashboardMockup from "@/assets/dashboard-mockup.png";
-import logoPlenario from "@/assets/logo-plenario.png";
+import logoVereadorPro from "@/assets/logo-vereadorpro.png";
 
 const Landing = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -44,8 +44,8 @@ const Landing = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
         <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <img src={logoPlenario} alt="Plenário" className="h-8 w-8" />
-            <span className="text-xl font-bold text-foreground">Plenário</span>
+            <img src={logoVereadorPro} alt="VereadorPro" className="h-8 w-8" />
+            <span className="text-xl font-bold text-foreground">VereadorPro</span>
           </div>
           
           {/* Desktop Menu */}
@@ -197,7 +197,7 @@ const Landing = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-20 blur-3xl rounded-3xl" />
                 <img 
                   src={dashboardMockup} 
-                  alt="Dashboard do Plenário" 
+                  alt="Dashboard do VereadorPro" 
                   className="relative rounded-xl sm:rounded-2xl shadow-2xl border border-white/10 hover:scale-105 transition-all duration-500"
                 />
               </div>
@@ -617,7 +617,7 @@ const Landing = () => {
               </span>
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
-              Veja como o Plenário está transformando mandatos em todo o Brasil
+              Veja como o VereadorPro está transformando mandatos em todo o Brasil
             </p>
           </div>
 
@@ -653,7 +653,7 @@ const Landing = () => {
                 ))}
               </div>
               <p className="text-foreground mb-6 italic">
-                "O melhor investimento do meu mandato. Indispensável! Não consigo mais imaginar minha rotina sem o Plenário."
+                "O melhor investimento do meu mandato. Indispensável! Não consigo mais imaginar minha rotina sem o VereadorPro."
               </p>
               <div className="flex items-center gap-4">
                 <Avatar className="h-12 w-12">
@@ -735,8 +735,8 @@ const Landing = () => {
             {/* Logo and Description */}
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
-                <img src={logoPlenario} alt="Plenário" className="h-10 w-10" />
-                <span className="text-2xl font-bold">Plenário</span>
+                <img src={logoVereadorPro} alt="VereadorPro" className="h-10 w-10" />
+                <span className="text-2xl font-bold">VereadorPro</span>
               </div>
               <p className="text-sidebar-foreground/70 mb-4 max-w-md">
                 A plataforma completa de gestão legislativa com inteligência artificial para vereadores modernos.
@@ -784,9 +784,9 @@ const Landing = () => {
               <h3 className="font-semibold mb-4">Contato</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="mailto:contato@plenario.com.br" className="text-sidebar-foreground/70 hover:text-primary transition-smooth flex items-center gap-2">
+                  <a href="mailto:contato@vereadorpro.com.br" className="text-sidebar-foreground/70 hover:text-primary transition-smooth flex items-center gap-2">
                     <Mail className="h-4 w-4" />
-                    contato@plenario.com.br
+                    contato@vereadorpro.com.br
                   </a>
                 </li>
               </ul>
@@ -794,7 +794,7 @@ const Landing = () => {
           </div>
 
           <div className="border-t border-sidebar-border pt-8 text-center text-sidebar-foreground/70 text-sm">
-            <p>© 2024 Plenário. Todos os direitos reservados.</p>
+            <p>© 2024 VereadorPro. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
