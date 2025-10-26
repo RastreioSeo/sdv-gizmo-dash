@@ -9,6 +9,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Landing from "./pages/Landing";
 import Index from "./pages/Index";
 import Projetos from "./pages/Projetos";
+import ProjetoDetalhes from "./pages/ProjetoDetalhes";
 import NovoProjeto from "./pages/NovoProjeto";
 import Comunicacao from "./pages/Comunicacao";
 import Agenda from "./pages/Agenda";
@@ -39,6 +40,7 @@ const App = () => (
                       <Routes>
                         <Route path="/dashboard" element={<Index />} />
                         <Route path="/projetos" element={<Projetos />} />
+                        <Route path="/projetos/:id" element={<ProjetoDetalhes />} />
                         <Route path="/projetos/novo" element={<NovoProjeto />} />
                         <Route path="/comunicacao" element={<Comunicacao />} />
                         <Route path="/agenda" element={<Agenda />} />

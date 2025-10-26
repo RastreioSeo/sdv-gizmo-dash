@@ -6,77 +6,145 @@ import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+
+const formSchema = z.object({
+  titulo: z.string().min(1, "Título é obrigatório"),
+  descricao: z.string().optional(),
+  status: z.enum(["em_analise", "aprovado", "rejeitado"]),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
+interface Projeto {
+  id: string;
+  titulo: string;
+  status: string | null;
+  created_at: string;
+}
 
 const Projetos = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("todos");
+  const [projetos, setProjetos] = useState<Projeto[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const projetos = [
-    {
-      id: "PL 001/2024",
-      titulo: "Projeto de Mobilidade Urbana",
-      autor: "Vereador Silva",
-      dataApresentacao: "15/03/2024",
-      prazo: "30/04/2024",
-      status: "Em análise"
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      titulo: "",
+      descricao: "",
+      status: "em_analise",
     },
-    {
-      id: "PL 002/2024",
-      titulo: "Programa de Educação Ambiental",
-      autor: "Vereadora Santos",
-      dataApresentacao: "10/03/2024",
-      prazo: "25/04/2024",
-      status: "Aprovado"
-    },
-    {
-      id: "PL 003/2024",
-      titulo: "Reforma da Praça Central",
-      autor: "Vereador Costa",
-      dataApresentacao: "05/03/2024",
-      prazo: "20/04/2024",
-      status: "Em votação"
-    },
-    {
-      id: "PL 004/2024",
-      titulo: "Ampliação da Rede de Saúde",
-      autor: "Vereadora Lima",
-      dataApresentacao: "01/03/2024",
-      prazo: "15/04/2024",
-      status: "Em análise"
-    },
-    {
-      id: "PL 005/2024",
-      titulo: "Incentivo ao Esporte Juvenil",
-      autor: "Vereador Mendes",
-      dataApresentacao: "28/02/2024",
-      prazo: "10/04/2024",
-      status: "Rejeitado"
+  });
+
+  useEffect(() => {
+    fetchProjetos();
+  }, []);
+
+  const fetchProjetos = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projetos')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setProjetos(data || []);
+    } catch (error: any) {
+      toast({
+        title: 'Erro',
+        description: 'Não foi possível carregar os projetos',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const onSubmit = async (values: FormData) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: 'Erro',
+          description: 'Você precisa estar autenticado',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      const { error } = await supabase
+        .from('projetos')
+        .insert({
+          titulo: values.titulo,
+          descricao: values.descricao || null,
+          status: values.status,
+          user_id: user.id,
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Sucesso',
+        description: 'Projeto criado com sucesso',
+      });
+
+      setDialogOpen(false);
+      form.reset();
+      fetchProjetos();
+    } catch (error: any) {
+      toast({
+        title: 'Erro',
+        description: error.message || 'Não foi possível criar o projeto',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const filteredProjetos = projetos.filter(projeto => {
     const matchesSearch = projeto.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         projeto.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         projeto.autor.toLowerCase().includes(searchTerm.toLowerCase());
+                         projeto.id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "todos" || projeto.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
   const getStatusVariant = (status: string) => {
     switch (status) {
-      case "Aprovado":
+      case "aprovado":
         return "default";
-      case "Em análise":
+      case "em_analise":
         return "secondary";
-      case "Em votação":
-        return "outline";
-      case "Rejeitado":
+      case "rejeitado":
         return "destructive";
       default:
-        return "default";
+        return "outline";
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "em_analise":
+        return "Em Análise";
+      case "aprovado":
+        return "Aprovado";
+      case "rejeitado":
+        return "Rejeitado";
+      default:
+        return status;
     }
   };
 
@@ -90,10 +158,84 @@ const Projetos = () => {
             <h1 className="text-3xl font-bold">Projetos de Lei</h1>
             <p className="text-muted-foreground">Gerencie todos os projetos de lei em tramitação</p>
           </div>
-          <Button className="gap-2" onClick={() => navigate("/projetos/novo")}>
-            <Plus className="h-4 w-4" />
-            Novo Projeto
-          </Button>
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="gap-2">
+                <Plus className="h-4 w-4" />
+                Novo Projeto
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>Novo Projeto de Lei</DialogTitle>
+              </DialogHeader>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="titulo"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Título *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Digite o título do projeto" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="descricao"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Descrição</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="Digite a descrição do projeto" 
+                            rows={5}
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione o status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="em_analise">Em Análise</SelectItem>
+                            <SelectItem value="aprovado">Aprovado</SelectItem>
+                            <SelectItem value="rejeitado">Rejeitado</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <div className="flex justify-end gap-3">
+                    <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+                      Cancelar
+                    </Button>
+                    <Button type="submit">Criar Projeto</Button>
+                  </div>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <Card>
@@ -115,10 +257,9 @@ const Projetos = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="todos">Todos os status</SelectItem>
-                  <SelectItem value="Em análise">Em análise</SelectItem>
-                  <SelectItem value="Em votação">Em votação</SelectItem>
-                  <SelectItem value="Aprovado">Aprovado</SelectItem>
-                  <SelectItem value="Rejeitado">Rejeitado</SelectItem>
+                  <SelectItem value="em_analise">Em Análise</SelectItem>
+                  <SelectItem value="aprovado">Aprovado</SelectItem>
+                  <SelectItem value="rejeitado">Rejeitado</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -128,37 +269,52 @@ const Projetos = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>ID</TableHead>
                     <TableHead>Título</TableHead>
-                    <TableHead>Autor</TableHead>
-                    <TableHead>Data Apresentação</TableHead>
-                    <TableHead>Prazo</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead>Data de Criação</TableHead>
                     <TableHead className="text-right">Ações</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredProjetos.length === 0 ? (
+                  {loading ? (
                     <TableRow>
-                      <TableCell colSpan={7} className="text-center text-muted-foreground">
+                      <TableCell colSpan={4} className="text-center text-muted-foreground">
+                        Carregando...
+                      </TableCell>
+                    </TableRow>
+                  ) : filteredProjetos.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={4} className="text-center text-muted-foreground">
                         Nenhum projeto encontrado
                       </TableCell>
                     </TableRow>
                   ) : (
                     filteredProjetos.map((projeto) => (
-                      <TableRow key={projeto.id}>
-                        <TableCell className="font-medium">{projeto.id}</TableCell>
-                        <TableCell>{projeto.titulo}</TableCell>
-                        <TableCell>{projeto.autor}</TableCell>
-                        <TableCell>{projeto.dataApresentacao}</TableCell>
-                        <TableCell>{projeto.prazo}</TableCell>
+                      <TableRow 
+                        key={projeto.id}
+                        className="cursor-pointer hover:bg-muted/50"
+                        onClick={() => navigate(`/projetos/${projeto.id}`)}
+                      >
+                        <TableCell className="font-medium">{projeto.titulo}</TableCell>
                         <TableCell>
-                          <Badge variant={getStatusVariant(projeto.status)}>
-                            {projeto.status}
+                          <Badge variant={getStatusVariant(projeto.status || '')}>
+                            {getStatusLabel(projeto.status || '')}
                           </Badge>
                         </TableCell>
+                        <TableCell>
+                          {new Date(projeto.created_at).toLocaleDateString('pt-BR')}
+                        </TableCell>
                         <TableCell className="text-right">
-                          <Button variant="ghost" size="sm">Ver Detalhes</Button>
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/projetos/${projeto.id}`);
+                            }}
+                          >
+                            Ver Detalhes
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))
